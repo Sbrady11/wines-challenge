@@ -1,4 +1,5 @@
 import React from 'react';
+import WineProductListing from './wineProductListing';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ componentDidMount() {
   .then(results => results.json())
   .then(data => 
     this.setState({
-      wineItems : data,
+      wineItems : data.response.mainItems,
     })
   )
 }
@@ -24,6 +25,15 @@ componentDidMount() {
     return(
       <div>
        <div> Hello from app </div>
+       {this.state.wineItems.map(item => {
+         return(
+           <WineProductListing
+              productName = {item.product.name}
+              key={item.product.id}
+              numberOfBottles = {item.product.numberOfBottles}
+              price = {item.listPrice} />
+         )
+       })}
        <pre>
         <code>
           {JSON.stringify(this.state, null, 4)}

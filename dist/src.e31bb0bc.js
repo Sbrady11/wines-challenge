@@ -25748,7 +25748,7 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"../node_modules/react-dom/cjs/react-dom.development.js"}],"app.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"../node_modules/react-dom/cjs/react-dom.development.js"}],"wineProductListing.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -25757,6 +25757,26 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var WineProductListing = function WineProductListing(props) {
+  return _react.default.createElement("div", null, _react.default.createElement("h2", null, props.productName), _react.default.createElement("h2", null, props.numberOfBottles), _react.default.createElement("h2", null, props.price));
+};
+
+var _default = WineProductListing;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"app.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _wineProductListing = _interopRequireDefault(require("./wineProductListing"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25804,14 +25824,21 @@ function (_React$Component) {
         return results.json();
       }).then(function (data) {
         return _this2.setState({
-          wineItems: data
+          wineItems: data.response.mainItems
         });
       });
     }
   }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", null, _react.default.createElement("div", null, " Hello from app "), _react.default.createElement("pre", null, _react.default.createElement("code", null, JSON.stringify(this.state, null, 4))));
+      return _react.default.createElement("div", null, _react.default.createElement("div", null, " Hello from app "), this.state.wineItems.map(function (item) {
+        return _react.default.createElement(_wineProductListing.default, {
+          productName: item.product.name,
+          key: item.product.id,
+          numberOfBottles: item.product.numberOfBottles,
+          price: item.listPrice
+        });
+      }), _react.default.createElement("pre", null, _react.default.createElement("code", null, JSON.stringify(this.state, null, 4))));
     }
   }]);
 
@@ -25820,7 +25847,7 @@ function (_React$Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./wineProductListing":"wineProductListing.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -25934,7 +25961,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58158" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52273" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
