@@ -25810,7 +25810,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
-      wineItems: []
+      wineItems: [],
+      state: ''
     };
     return _this;
   }
@@ -25831,11 +25832,11 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", null, _react.default.createElement("div", null, " Hello from app "), this.state.wineItems.map(function (item) {
+      return _react.default.createElement("div", null, this.state.wineItems.map(function (item) {
         return _react.default.createElement(_wineProductListing.default, {
           productName: item.product.name,
           key: item.product.id,
-          numberOfBottles: item.product.numberOfBottles,
+          numberOfBottles: item.product.skus[0].numberOfBottles,
           price: item.listPrice
         });
       }), _react.default.createElement("pre", null, _react.default.createElement("code", null, JSON.stringify(this.state, null, 4))));
@@ -25961,7 +25962,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52273" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56475" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

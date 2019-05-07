@@ -6,12 +6,12 @@ class App extends React.Component {
   super(props);
 
   this.state = {
-    wineItems:[]
+    wineItems:[],
+    state: ''
   }
 }
 
 componentDidMount() {
-
   fetch('https://www.wsjwine.com/api/offer/0033008')
   .then(results => results.json())
   .then(data => 
@@ -24,13 +24,12 @@ componentDidMount() {
   render() {
     return(
       <div>
-       <div> Hello from app </div>
        {this.state.wineItems.map(item => {
          return(
            <WineProductListing
               productName = {item.product.name}
               key={item.product.id}
-              numberOfBottles = {item.product.numberOfBottles}
+              numberOfBottles = {item.product.skus[0].numberOfBottles}
               price = {item.listPrice} />
          )
        })}
@@ -39,7 +38,8 @@ componentDidMount() {
           {JSON.stringify(this.state, null, 4)}
           </code>
         </pre>
-        </div>
+        
+      </div>
     );
   }
 }
