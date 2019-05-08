@@ -3,9 +3,9 @@ import React from 'react';
 const WineProductListing = props => {
   return(
     <div>
-    <h2>{props.productName}</h2>
-    <h2>{props.numberOfBottles}</h2>
-    <h2>{props.price}</h2>
+    <input type="radio" />
+    <b>{props.productName}</b> + 2 Bonus Bottles & Glasses <b> JUST ${props.price} </b>
+    <p>As requested in spec, #of bottles returned from API: {props.numberOfBottles}</p>
     </div>
   )
 }

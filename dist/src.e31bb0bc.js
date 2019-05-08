@@ -25761,10 +25761,30 @@ var _react = _interopRequireDefault(require("react"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var WineProductListing = function WineProductListing(props) {
-  return _react.default.createElement("div", null, _react.default.createElement("h2", null, props.productName), _react.default.createElement("h2", null, props.numberOfBottles), _react.default.createElement("h2", null, props.price));
+  return _react.default.createElement("div", null, _react.default.createElement("input", {
+    type: "radio"
+  }), _react.default.createElement("b", null, props.productName), " + 2 Bonus Bottles & Glasses ", _react.default.createElement("b", null, " JUST $", props.price, " "), _react.default.createElement("p", null, "As requested in spec, #of bottles returned from API: ", props.numberOfBottles));
 };
 
 var _default = WineProductListing;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"stateLocationOutput.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var StateLocationOutput = function StateLocationOutput(props) {
+  return _react.default.createElement("div", null, props.city, ", ", props.stateCode, " ");
+};
+
+var _default = StateLocationOutput;
 exports.default = _default;
 },{"react":"../node_modules/react/index.js"}],"app.js":[function(require,module,exports) {
 "use strict";
@@ -25777,6 +25797,8 @@ exports.default = void 0;
 var _react = _interopRequireDefault(require("react"));
 
 var _wineProductListing = _interopRequireDefault(require("./wineProductListing"));
+
+var _stateLocationOutput = _interopRequireDefault(require("./stateLocationOutput"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25813,7 +25835,8 @@ function (_React$Component) {
       wineItems: [],
       zipcode: '',
       zipReturn: {},
-      stateCode: ''
+      stateCode: '',
+      defaultText: 'Enter Zip to populate City and State'
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     return _this;
@@ -25846,36 +25869,59 @@ function (_React$Component) {
         }).then(function (data) {
           return _this3.setState({
             zipReturn: data.response,
-            stateCode: data.response.stateCode
+            stateCode: data.response.stateCode,
+            defaultText: ''
           });
         });
       });
-      console.log('https://www.wsjwine.com/api/address/zipcode/' + this.state.zipcode);
     }
   }, {
     key: "render",
     value: function render() {
       var state = this.state.stateCode;
+      var defaultText = this.state.defaultText;
       var message;
+      var zipResponse;
 
       if (state === "CT") {
-        message = _react.default.createElement("h1", null, "MESSAGE");
+        message = _react.default.createElement("p", null, "This is the conditional message that appears if the user has selected a CT zipcode");
       } else {
         message;
       }
 
-      return _react.default.createElement("div", null, this.state.wineItems.map(function (item) {
+      if (defaultText === '') {
+        zipResponse = _react.default.createElement(_stateLocationOutput.default, {
+          city: this.state.zipReturn.city,
+          stateCode: this.state.zipReturn.stateCode
+        });
+      } else {
+        zipResponse;
+      }
+
+      return _react.default.createElement("div", null, _react.default.createElement("form", null, _react.default.createElement("div", {
+        className: "title"
+      }, _react.default.createElement("span", null, "Step 1"), _react.default.createElement("div", {
+        className: "section-header"
+      }, "Which Case Would You Like?")), _react.default.createElement("p", null, "Whatever you choose, we'll add in two bonus Cabs and two crystal glasses and you'll have the complete pacakge - worth over $250 - for ONLY $69.99 (plus $19.99 shipping & applicable tax; please allow 5-10 days for delivery, depending on shipping state)."), _react.default.createElement("fieldset", null, this.state.wineItems.map(function (item) {
         return _react.default.createElement(_wineProductListing.default, {
           productName: item.product.name,
           key: item.product.id,
           numberOfBottles: item.product.skus[0].numberOfBottles,
           price: item.listPrice
         });
-      }), _react.default.createElement("h1", null, "State Selector"), "to test: 06850, 12345", _react.default.createElement("form", null, _react.default.createElement("label", null, "Zip", _react.default.createElement("input", {
+      }))), _react.default.createElement("form", null, _react.default.createElement("div", {
+        className: "title"
+      }, _react.default.createElement("span", null, "Step 2"), _react.default.createElement("div", {
+        className: "section-header"
+      }, "State Selector")), _react.default.createElement("label", null, _react.default.createElement("div", {
+        className: "label-title"
+      }, "ZIP"), _react.default.createElement("input", {
         type: "text",
         value: this.state.zipcode,
         onChange: this.handleChange
-      }), this.state.zipReturn.city, ",  ", this.state.zipReturn.stateCode), message), _react.default.createElement("pre", null, _react.default.createElement("code", null, JSON.stringify(this.state.zipReturn, null, 4), JSON.stringify(this.state.zipcode, null, 4))));
+      }), " ", _react.default.createElement("i", null, this.state.defaultText), _react.default.createElement("div", {
+        className: "state-response"
+      }, zipResponse)), message));
     }
   }]);
 
@@ -25884,7 +25930,7 @@ function (_React$Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./wineProductListing":"wineProductListing.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./wineProductListing":"wineProductListing.js","./stateLocationOutput":"stateLocationOutput.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -25951,7 +25997,12 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"../node_modules/bootstrap/dist/css/bootstrap.css":[function(require,module,exports) {
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/bootstrap/dist/css/bootstrap.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -25965,12 +26016,14 @@ var _reactDom = _interopRequireDefault(require("react-dom"));
 
 var _app = _interopRequireDefault(require("./app.js"));
 
+require("./style.css");
+
 require("bootstrap/dist/css/bootstrap.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _reactDom.default.render(_react.default.createElement(_app.default, null), document.getElementById('root'));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./app.js":"app.js","bootstrap/dist/css/bootstrap.css":"../node_modules/bootstrap/dist/css/bootstrap.css"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./app.js":"app.js","./style.css":"style.css","bootstrap/dist/css/bootstrap.css":"../node_modules/bootstrap/dist/css/bootstrap.css"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -25998,7 +26051,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53265" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54106" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

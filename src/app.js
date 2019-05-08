@@ -1,5 +1,6 @@
 import React from 'react';
 import WineProductListing from './wineProductListing';
+import StateLocationOutput from './stateLocationOutput';
 
 class App extends React.Component {
   constructor(props) {
@@ -9,7 +10,8 @@ class App extends React.Component {
     wineItems:[],
     zipcode: '',
     zipReturn: {},
-    stateCode:''
+    stateCode:'',
+    defaultText: 'Enter Zip to populate City and State'
   }
 
   this.handleChange = this.handleChange.bind(this);
@@ -33,49 +35,58 @@ handleChange(event){
   .then(data =>
   this.setState({
     zipReturn: data.response,
-    stateCode: data.response.stateCode
+    stateCode: data.response.stateCode,
+    defaultText: ''
   }))
   );
-  console.log('https://www.wsjwine.com/api/address/zipcode/'+this.state.zipcode)
 }
 
   render() {
-    const state = this.state.stateCode
+    const state = this.state.stateCode;
+    const defaultText = this.state.defaultText;
       let message;
+      let zipResponse;
 
       if (state === "CT"){
-        message = <h1>MESSAGE</h1>
+        message = <p>This is the conditional message that appears if the 
+        user has selected a CT zipcode</p>
       } else {
         message
+      } 
+
+      if(defaultText === ''){
+        zipResponse = <StateLocationOutput city = {this.state.zipReturn.city} stateCode = {this.state.zipReturn.stateCode} />
+      } else {
+        zipResponse
       }
+
     return(
       <div>
-       {this.state.wineItems.map(item => {
-         return(
-           <WineProductListing
-              productName = {item.product.name}
-              key={item.product.id}
-              numberOfBottles = {item.product.skus[0].numberOfBottles}
-              price = {item.listPrice} />
-         )
-       })}
-       <h1>State Selector</h1>
-       to test: 06850, 12345
+        <form>
+          <div className="title"><span>Step 1</span><div className="section-header">Which Case Would You Like?</div></div>
+          <p>Whatever you choose, we'll add in two bonus Cabs and two crystal 
+            glasses and you'll have the complete pacakge - worth over $250 - 
+            for ONLY $69.99 (plus $19.99 shipping & applicable tax; please allow 
+            5-10 days for delivery, depending on shipping state).</p>
+          <fieldset>
+            {this.state.wineItems.map(item => {
+              return(
+                <WineProductListing productName = {item.product.name} key={item.product.id} numberOfBottles = {item.product.skus[0].numberOfBottles} price = {item.listPrice} /> 
+                  )
+            })}
+          </fieldset>
+        </form>
+              
        <form>
-          <label>Zip
-          <input type="text" value={this.state.zipcode} onChange={this.handleChange} />
-          {this.state.zipReturn.city},  {this.state.zipReturn.stateCode}
-          
+        <div className="title"><span>Step 2</span><div className="section-header">State Selector</div></div>
+          <label><div className="label-title">ZIP</div>
+            <input type="text" value={this.state.zipcode} onChange={this.handleChange} /> <i>{this.state.defaultText}</i>
+            <div className="state-response">
+              {zipResponse}
+            </div>
           </label>
           {message}
-       </form>
-       <pre>
-        <code>
-          {JSON.stringify(this.state.zipReturn, null, 4)}
-          {JSON.stringify(this.state.zipcode, null, 4)}
-          </code>
-        </pre>
-        
+       </form> 
       </div>
     );
   }

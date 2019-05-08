@@ -1,3 +1,54 @@
+@media(max-width: 425px) {
+    .title>span {
+        font-size: 1em;
+    }
+    form {
+        padding-right: 1em;
+    }
+    form:nth-child(2)>label>i {
+        display: block;
+    }
+}
+
+form {
+    max-width: 550px !important;
+}
+
+.title {
+    border-bottom: 2px solid #d7182a
+}
+
+.title>span {
+    color: white;
+    background: #d7182a;
+    font-size: 1.55em;
+    padding: .25em .5em;
+}
+
+.section-header {
+    color: #d7182a;
+    font-weight: bold;
+    font-size: 1.22em;
+    display: inline-block;
+    padding-left: 1em;
+}
+
+form>p,
+form:nth-child(2)>label {
+    padding-top: 1em;
+}
+
+form {
+    padding-left: 1em;
+}
+
+.label-title {
+    display: block;
+}
+
+.state-response {
+    display: inline-block;
+}
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
