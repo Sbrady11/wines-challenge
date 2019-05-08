@@ -1,15 +1,3 @@
-@media(max-width: 425px) {
-    .title>span {
-        font-size: 1em;
-    }
-    form {
-        padding-right: 1em;
-    }
-    form:nth-child(2)>label>i {
-        display: block;
-    }
-}
-
 form {
     max-width: 550px !important;
 }
@@ -48,4 +36,16 @@ form {
 
 .state-response {
     display: inline-block;
+}
+
+@media(max-width: 425px) {
+    .title>span {
+        font-size: 1em;
+    }
+    form {
+        padding-right: 1em;
+    }
+    form:nth-child(2)>label>i {
+        display: block;
+    }
 }
