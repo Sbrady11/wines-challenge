@@ -33,6 +33,7 @@ Please feel free to clone the repo:
 
 `npm install`
 - runs the npm installer
+
 `npm start`
 - runs bundler, starts local server
 
