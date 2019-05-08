@@ -25790,9 +25790,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -25811,8 +25811,11 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
       wineItems: [],
-      state: ''
+      zipcode: '',
+      zipReturn: {},
+      stateCode: ''
     };
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -25830,8 +25833,37 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      var _this3 = this;
+
+      var value = event.target.value;
+      this.setState({
+        zipcode: value
+      }, function () {
+        return fetch('https://www.wsjwine.com/api/address/zipcode/' + _this3.state.zipcode).then(function (results) {
+          return results.json();
+        }).then(function (data) {
+          return _this3.setState({
+            zipReturn: data.response,
+            stateCode: data.response.stateCode
+          });
+        });
+      });
+      console.log('https://www.wsjwine.com/api/address/zipcode/' + this.state.zipcode);
+    }
+  }, {
     key: "render",
     value: function render() {
+      var state = this.state.stateCode;
+      var message;
+
+      if (state === "CT") {
+        message = _react.default.createElement("h1", null, "MESSAGE");
+      } else {
+        message;
+      }
+
       return _react.default.createElement("div", null, this.state.wineItems.map(function (item) {
         return _react.default.createElement(_wineProductListing.default, {
           productName: item.product.name,
@@ -25839,7 +25871,11 @@ function (_React$Component) {
           numberOfBottles: item.product.skus[0].numberOfBottles,
           price: item.listPrice
         });
-      }), _react.default.createElement("pre", null, _react.default.createElement("code", null, JSON.stringify(this.state, null, 4))));
+      }), _react.default.createElement("h1", null, "State Selector"), "to test: 06850, 12345", _react.default.createElement("form", null, _react.default.createElement("label", null, "Zip", _react.default.createElement("input", {
+        type: "text",
+        value: this.state.zipcode,
+        onChange: this.handleChange
+      }), this.state.zipReturn.city, ",  ", this.state.zipReturn.stateCode), message), _react.default.createElement("pre", null, _react.default.createElement("code", null, JSON.stringify(this.state.zipReturn, null, 4), JSON.stringify(this.state.zipcode, null, 4))));
     }
   }]);
 
@@ -25962,7 +25998,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56475" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53265" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
