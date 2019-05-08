@@ -11,7 +11,7 @@ In response to two challenges from Wines Inc in Norwalk.
 ## Installation
 Please feel free to clone the repo:
 
-1. `https://github.com/Sbrady11/wines-challenge`
+1. `git clone https://github.com/Sbrady11/wines-challenge`
 
 2. `cd wines-challenge`
 
