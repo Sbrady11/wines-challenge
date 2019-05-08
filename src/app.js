@@ -75,8 +75,7 @@ handleChange(event){
                   )
             })}
           </fieldset>
-        </form>
-              
+        </form>             
        <form>
         <div className="title"><span>Step 2</span><div className="section-header">State Selector</div></div>
           <label><div className="label-title">ZIP</div>
