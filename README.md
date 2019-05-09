@@ -37,5 +37,3 @@ Please feel free to clone the repo:
 `npm start`
 - runs bundler, starts local server
 
-## Total dev time
-- 2.5 hrs (had to work around other projects!)
