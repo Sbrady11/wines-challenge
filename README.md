@@ -37,3 +37,10 @@ Please feel free to clone the repo:
 `npm start`
 - runs bundler, starts local server
 
+## Dev Timeline
+
+- Dev Start: ~10PM 5/6 -10:30 5/6 (project init)
+- Dev Resume: ~8PM 5/7 - Code functional ~10PM 5/7
+- Finish with upload to Github after other project work complete
+
+dev time ~ 2.5hrs
